@@ -1,0 +1,22 @@
+{
+    "name": "tpmanc/crmclient",
+    "keywords": ["crm", "client"],
+    "description": "Client for CRM",
+    "homepage": "https://github.com/tpmanc/crm-client",
+    "license": "BSD-3-Clause",
+    "minimum-stability" : "dev",
+    "authors": [
+        {
+            "name": "tpmanc",
+            "email": "tpxtrime@mail.ru",
+            "homepage": "https://github.com/tpmanc",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"tpmanc\\crmclient\\": ""}
+    },
+    "require": {
+        "php": ">=5.4.0"
+    }
+}
