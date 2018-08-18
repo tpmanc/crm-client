@@ -1,5 +1,4 @@
-# CSV Helper
-Helper class for working with CSV files.
+# CRM Client
 
 ## Install via Composer
 
