@@ -6,152 +6,66 @@ Helper class for working with CSV files.
 Run the following command
 
 ```bash
-$ composer require tpmanc/csvhelper "*"
+$ composer require tpmanc/crmclient "*"
 ```
 
 or add
 
 ```bash
-$ "tpmanc/csvhelper": "*"
+$ "tpmanc/crmclient": "*"
 ```
 
 to the require section of your `composer.json` file.
 
-## File reading
-
-file.csv:
-```
-Russia;Moscow;
-France;Paris;
-Great Gritain;London;
-```
+## Send orders
 
 ```php
-use tpmanc\csvhelper\CsvHelper;
+use tpmanc\crmclient\ApiClient;
+use tpmanc\crmclient\Client;
+use tpmanc\crmclient\Order;
+use tpmanc\crmclient\OrderProduct;
+use tpmanc\crmclient\OrderProducts;
 
 ...
 
-CsvHelper::open('files/file.csv')->parse(function($line) {
-    echo $line[0] . ': ' . $line[1];
-});
+$client = new Client(
+    'Name 8', // name
+    '+7 (952) 268-97-23' // phone
+);
+$client->setEmail('email@email.test');
+$client->setAddress('Address');
+$client->setDelivery('Delivery Type');
+$client->setPayment('Payment Type');
+$client->setComment('Comment');
+
+$orderProducts = new OrderProducts();
+$orderProducts->addProduct(new OrderProduct(
+    1982, // product id
+    5000 // product price
+));
+$orderProducts->addProduct(new OrderProduct(
+    6571, // product id
+    1000, // product price
+    5 // amount
+));
+
+$orderMethod = 1;
+$order = new Order(
+    '5317263', // id
+    $orderMethod,
+    $client
+);
+$timestamp = time();
+$order->setDate($timestamp);
+$order->setStatus(3);
+$order->setProducts($orderProducts);
+
+
+$apiUrl = 'http://localhost:8080';
+$token = '5XG2qsuKriI6Cq6sYX9krZb622rQ9w6O6XW833HZ';
+$api = new ApiClient($apiUrl, $token);
+$api->addOrder($order);
+
+$result = $api->sendOrders();
 ```
 
-Result:
-```
-Russia: Moscow
-France: Paris
-Great Gritain: London
-```
-
-### Custom delimiter
-
-file.csv:
-```
-Russia|Moscow|
-France|Paris|
-Great Gritain|London|
-```
-
-```php
-use tpmanc\csvhelper\CsvHelper;
-
-...
-
-CsvHelper::open('files/file.csv')->delimiter('|')->parse(function($line) {
-    echo $line[0] . ': ' . $line[1];
-});
-```
-
-Result:
-```
-Russia: Moscow
-France: Paris
-Great Gritain: London
-```
-
-### Change encoding
-
-```php
-use tpmanc\csvhelper\CsvHelper;
-
-...
-
-CsvHelper::open('files/file.csv')->encode('cp1251', 'utf-8')->parse(function($line) {
-    echo $line[0] . ': ' . $line[1];
-});
-```
-
-### Offset and limit
-
-file.csv:
-```
-Russia;Moscow;
-France;Paris;
-Great Gritain;London;
-```
-
-```php
-use tpmanc\csvhelper\CsvHelper;
-
-...
-
-CsvHelper::open('files/file.csv')->offset(1)->limit(1)->parse(function($line) {
-    echo $line[0] . ': ' . $line[1];
-});
-```
-
-Result:
-```
-France: Paris
-```
-
-### Using variables from the parent scope
-
-file.csv:
-```
-Russia;Moscow;
-France;Paris;
-Great Gritain;London;
-```
-
-```php
-use tpmanc\csvhelper\CsvHelper;
-
-...
-
-$lineCount = 0;
-$array = [];
-CsvHelper::open('files/file.csv')->parse(function($line) use(&$lineCount, &$array) {
-    $lineCount++;
-    $array[] = $line[0];
-});
-echo $lineCount;
-echo $array[0];
-echo $array[1];
-```
-
-Result:
-```
-3
-Russia
-France
-```
-
-## Create new file
-
-```php
-use tpmanc\csvhelper\CsvHelper;
-
-...
-
-$file = CsvHelper::create()->delimiter(';');
-
-$file->encode('cp1251', 'utf-8'); // change encoding
-$file->addLine('1.;France;'); // add row to file by string
-$file->addLine([
-    2,
-    'Germany'
-]); // add row to file by array
-
-$file->save('./new-file.csv');
-```
