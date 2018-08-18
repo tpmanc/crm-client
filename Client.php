@@ -1,5 +1,7 @@
 <?php
 
+namespace tpmanc\crmclient;
+
 /**
  * 
  */
@@ -13,7 +15,7 @@ class Client
     private $payment;
     private $comment;
 
-    public function __contruct($name, $phone)
+    public function __construct($name, $phone)
     {
         $this->name = $name;
         $this->phone = $phone;

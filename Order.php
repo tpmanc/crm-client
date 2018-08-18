@@ -1,17 +1,20 @@
 <?php
 
+namespace tpmanc\crmclient;
+
 /**
  * 
  */
-class Order implements SendableInterface
+class Order
 {
     private $id;
+    private $date;
     private $status;
     private $orderMethod;
     private $client;
     private $products;
 
-    public function __contruct($id, OrderMethod $orderMethod, Client $client)
+    public function __construct($id, $orderMethod, Client $client)
     {
         $this->id = $id;
         $this->orderMethod = $orderMethod;
@@ -19,11 +22,16 @@ class Order implements SendableInterface
 
         $this->status = 0;
         $this->products = [];
+        $this->date = time();
     }
 
     public function setId($id)
     {
         $this->id = $id;
+    }
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 
     public function setStatus($status)
@@ -46,10 +54,11 @@ class Order implements SendableInterface
         $this->products = $products;
     }
 
-    public function send()
+    public function toArray()
     {
         $arr = [
             'id' => $this->id,
+            'date' => $this->date,
             'status' => $this->status,
             'orderMethod' => $this->orderMethod,
             'client' => [
@@ -64,7 +73,7 @@ class Order implements SendableInterface
             'products' => [],
         ];
 
-        foreach ($this->products as $product) {
+        foreach ($this->products->getProducts() as $product) {
             $productArr = [
                 'id' => $product->getId(),
                 'price' => $product->getPrice(),
@@ -74,8 +83,6 @@ class Order implements SendableInterface
             $arr['products'][] = $productArr;
         }
 
-        $json = json_encode($arr);
-
-        return 123;
+        return $arr;
     }
 }

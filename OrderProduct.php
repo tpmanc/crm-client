@@ -1,5 +1,7 @@
 <?php
 
+namespace tpmanc\crmclient;
+
 /**
  * 
  */
@@ -9,7 +11,7 @@ class OrderProduct
     private $amount;
     private $price;
 
-    public function __contruct($id, $price, $amount = false)
+    public function __construct($id, $price, $amount = false)
     {
         $this->id = $id;
         $this->price = $price;
