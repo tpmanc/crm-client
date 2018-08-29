@@ -68,3 +68,17 @@ $api->addOrder($order);
 $result = $api->sendOrders();
 ```
 
+## Response
+
+```json
+{
+    "result":"ok",
+    "orders":[
+        {"crmId":51,"orderId":107256},
+        {"crmId":52,"orderId":107257},
+        {"crmId":53,"orderId":107258},
+        {"crmId":54,"orderId":107259},
+        {"crmId":55,"orderId":107260}
+    ]
+}
+```
