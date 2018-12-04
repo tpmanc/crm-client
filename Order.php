@@ -56,6 +56,16 @@ class Order
         $this->products = $products;
     }
 
+    public function setTotalPrice($totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
+    }
+
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
+    }
+
     public function toArray()
     {
         $arr = [
