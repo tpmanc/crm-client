@@ -10,15 +10,17 @@ class Order
     private $id;
     private $date;
     private $status;
+    private $totalPrice;
     private $orderMethod;
     private $client;
     private $products;
 
-    public function __construct($id, $orderMethod, Client $client)
+    public function __construct($id, $orderMethod, Client $client, $totalPrice)
     {
         $this->id = $id;
         $this->orderMethod = $orderMethod;
         $this->client = $client;
+        $this->totalPrice = $totalPrice;
 
         $this->status = 0;
         $this->products = [];
@@ -60,6 +62,7 @@ class Order
             'id' => $this->id,
             'date' => $this->date,
             'status' => $this->status,
+            'totalPrice' => $this->totalPrice,
             'orderMethod' => $this->orderMethod,
             'client' => [
                 'name' => $this->client->getName(),
