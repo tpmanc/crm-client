@@ -21,7 +21,7 @@ class ApiClient
     {
         $this->orders[] = $order->toArray();
 
-        usort($this->orders, ['self', 'sortOrdersByDate']);
+        usort($this->orders, ['self', 'sortOrdersById']);
     }
 
     public function addOrders(array $orders)
@@ -30,7 +30,7 @@ class ApiClient
             $this->orders[] = $order->toArray();
         }
 
-        usort($this->orders, ['self', 'sortOrdersByDate']);
+        usort($this->orders, ['self', 'sortOrdersById']);
     }
 
     private static function sortOrdersByDate($a, $b)
@@ -39,6 +39,14 @@ class ApiClient
             return 0;
         }
         return ($a['date'] < $b['date']) ? 1 : -1;
+    }
+
+    private static function sortOrdersById($a, $b)
+    {
+        if ($a == $b) {
+            return 0;
+        }
+        return ($a['id'] < $b['id']) ? -1 : 1;
     }
 
     public function sendOrders()
