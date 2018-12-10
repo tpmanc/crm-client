@@ -10,6 +10,7 @@ class OrderProduct
     private $id;
     private $amount;
     private $price;
+    private $title;
 
     public function __construct($id, $price, $amount = false)
     {
@@ -37,6 +38,11 @@ class OrderProduct
         $this->price = $price;
     }
 
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -50,5 +56,10 @@ class OrderProduct
     public function getAmount()
     {
         return $this->amount;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
     }
 }

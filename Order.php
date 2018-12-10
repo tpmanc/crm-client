@@ -91,6 +91,7 @@ class Order
                 'id' => $product->getId(),
                 'price' => $product->getPrice(),
                 'amount' => $product->getAmount(),
+                'title' => $product->getTitle(),
             ];
 
             $arr['products'][] = $productArr;
