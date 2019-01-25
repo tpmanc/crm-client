@@ -11,6 +11,7 @@ class Order
     private $date;
     private $status;
     private $totalPrice;
+    private $deliveryPrice;
     private $orderMethod;
     private $client;
     private $products;
@@ -66,6 +67,16 @@ class Order
         return $this->totalPrice;
     }
 
+    public function setDeliveryPrice($deliveryPrice)
+    {
+        $this->deliveryPrice = $deliveryPrice;
+    }
+
+    public function getDeliveryPrice()
+    {
+        return $this->deliveryPrice;
+    }
+
     public function toArray()
     {
         $arr = [
@@ -73,6 +84,7 @@ class Order
             'date' => $this->date,
             'status' => $this->status,
             'totalPrice' => $this->totalPrice,
+            'deliveryPrice' => $this->deliveryPrice,
             'orderMethod' => $this->orderMethod,
             'client' => [
                 'name' => $this->client->getName(),
