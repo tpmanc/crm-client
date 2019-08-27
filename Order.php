@@ -15,6 +15,7 @@ class Order
     private $orderMethod;
     private $client;
     private $products;
+    private $channelCode;
 
     public function __construct($id, $orderMethod, Client $client, $totalPrice)
     {
@@ -77,6 +78,16 @@ class Order
         return $this->deliveryPrice;
     }
 
+    public function setChannelCode($channelCode)
+    {
+        $this->channelCode = $channelCode;
+    }
+
+    public function getChannelCode()
+    {
+        return $this->channelCode;
+    }
+
     public function toArray()
     {
         $arr = [
@@ -96,6 +107,7 @@ class Order
                 'comment' => $this->client->getComment(),
             ],
             'products' => [],
+            'channelCode' => $this->channelCode,
         ];
 
         foreach ($this->products->getProducts() as $product) {
